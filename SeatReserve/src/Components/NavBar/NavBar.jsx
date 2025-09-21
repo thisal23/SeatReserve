@@ -1,12 +1,11 @@
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
 import { MenuIcon, SearchIcon, XIcon } from 'lucide-react'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
-    const {user} = useUser();
-    const {openSignIn} = useClerk();
+    const navigate = useNavigate();
 
   return (
     <>
@@ -30,13 +29,8 @@ function NavBar() {
         </div>
         </div>
         <div className='flex items-center gap-4 m-4 top-0 right-0'>
-        {
-          !user ? (
-             <button onClick={openSignIn} className='px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full  font-medium cursor-pointer'>Login</button>
-          ) : (
-              <UserButton/>
-          )
-        }
+          <button onClick={()=>navigate('/login')} className='px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full  font-medium cursor-pointer'>Login</button>
+
        
         </div>
         <div>

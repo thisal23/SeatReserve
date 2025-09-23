@@ -1,11 +1,26 @@
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
 import { MenuIcon, SearchIcon, XIcon } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+    useEffect(()=> {
+      const storedUser = localStorage.getItem("user");
+      if(storedUser){
+        setUser(JSON.parse(storedUser));
+      }
+    },[]);
+
+    const handleLogout = () =>{
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+      window.location.href= "/";
+    };
 
   return (
     <>
@@ -29,7 +44,15 @@ function NavBar() {
         </div>
         </div>
         <div className='flex items-center gap-4 m-4 top-0 right-0'>
-          <button onClick={()=>navigate('/login')} className='px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full  font-medium cursor-pointer'>Login</button>
+          {user ? (
+            <div className='gap-4 flex items-center'>
+              <span className='font-bold'> Hello, {user.name}</span>
+              <button onClick={handleLogout} className='px-4 py-1 sm:px-7 sm:py-2 bg-red-500 hover:bg-red-700 transition rounded-full  font-medium cursor-pointer'>Logout</button>
+            </div>
+          ):(
+
+            <button onClick={()=>navigate('/login')} className='px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-green-600 transition rounded-full  font-medium cursor-pointer'>Login</button>
+          )}
 
        
         </div>

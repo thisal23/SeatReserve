@@ -42,7 +42,7 @@ function Signup() {
                     <input className='rounded-lg p-2' type="password" value={password} placeholder='Enter your password' onChange={(e)=> setPassword(e.target.value)}/>
                 </div>
                 <div className='flex justify-center mt-6'>
-                <button className='cursor-pointer bg-primary text-white rounded-lg py-2 px-10' type='submit'>Register</button>
+                <button className='cursor-pointer bg-primary hover:bg-green-600 text-white rounded-lg py-2 px-10' type='submit'>Register</button>
 
                 </div>
             </form>

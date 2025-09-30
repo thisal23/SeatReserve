@@ -11,6 +11,7 @@ import Search from './Pages/Search/Search.jsx'
 import Class from './Pages/Class/Class.jsx'
 import Login from './Pages/Login/Login.jsx'
 import Signup from './Pages/Signup/Signup.jsx'
+import Manage from './Pages/Manage/Manage.jsx'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -20,7 +21,7 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById('root')).render(
   
-  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+  
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<App/>} />
@@ -31,8 +32,8 @@ createRoot(document.getElementById('root')).render(
       <Route path="/class" element={<Class/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Signup/>}/>
+      <Route path="/manage" element={<Manage/>} />
     </Routes>
   </BrowserRouter>
-  </ClerkProvider>
   ,
 )

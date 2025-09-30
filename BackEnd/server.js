@@ -3,6 +3,8 @@ import cors from 'cors';
 import 'dotenv/config';
 import connectDB from './configs/db.js';
 import authRoutes from './routes/authRoutes.js';
+import manageRoute from './routes/manageRoutes.js';
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -14,6 +16,7 @@ app.use(cors())
 // API Routes
 app.get('/', (req, res) => { res.send('Server is Live')})
 app.use('/auth', authRoutes);
+app.use('/manage', manageRoute );
 
 // Start the server
 app.listen(PORT, ()=> {

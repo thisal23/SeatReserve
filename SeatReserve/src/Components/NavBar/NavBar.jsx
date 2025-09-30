@@ -41,6 +41,7 @@ function NavBar() {
             <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to='/'>Home</Link>
             <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to='/contact'>Contact</Link>
             <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to='/profile'>Profile</Link>
+            { user?.type==="admin" && <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to='/manage'>Manage</Link>}
         </div>
         </div>
         <div className='flex items-center gap-4 m-4 top-0 right-0'>

@@ -2,19 +2,22 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import API from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const type = 1; // 1 - User, 2 - Admin
+    const type = "user" ;
+    const navigate = useNavigate();
+
     const handleRegister = async (e)=> {
         e.preventDefault();
         try{
             const res= await API.post('/auth/register', {type, name, email, password});
             console.log(res.data);
             alert('Registration Successful! Please login.');
-            window.location.href='/login';
+            navigate('/login');
         }
         catch(err){
             console.log(err);

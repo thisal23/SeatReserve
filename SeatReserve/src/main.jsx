@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="/contact" element={<Contact/> } />
       <Route path = "/profile" element={<Profile/>} />
       <Route path="/trainlist/:line" element={<TrainList/>}/>
-      <Route path="/search" element={<Search/>}/>
+      <Route path="/search/:turn_No" element={<Search/>}/>
       <Route path="/class" element={<Class/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Signup/>}/>

@@ -4,6 +4,8 @@ import 'dotenv/config';
 import connectDB from './configs/db.js';
 import authRoutes from './routes/authRoutes.js';
 import manageRoute from './routes/manageRoutes.js';
+import trainListRoutes from './routes/trainlistRoutes.js';
+import searchRoutes from './routes/serchRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,6 +19,8 @@ app.use(cors())
 app.get('/', (req, res) => { res.send('Server is Live')})
 app.use('/auth', authRoutes);
 app.use('/manage', manageRoute );
+app.use('/', trainListRoutes);
+app.use('/search',searchRoutes);
 
 // Start the server
 app.listen(PORT, ()=> {

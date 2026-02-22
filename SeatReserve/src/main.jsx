@@ -12,6 +12,7 @@ import Class from './Pages/Class/Class.jsx'
 import Login from './Pages/Login/Login.jsx'
 import Signup from './Pages/Signup/Signup.jsx'
 import Manage from './Pages/Manage/Manage.jsx'
+import BookingConfirmation from './Components/BookingConfirmation/BookingConfirmation.jsx'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Signup/>}/>
       <Route path="/manage" element={<Manage/>} />
+      <Route path="/confirm" element={<BookingConfirmation/>}/>
     </Routes>
   </BrowserRouter>
   ,

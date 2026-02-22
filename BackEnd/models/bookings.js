@@ -1,19 +1,25 @@
 import mongoose from "mongoose";
+import Remaining from "./availableSeats.js";
 
 const bookings = new mongoose.Schema({
-    booking_Id:{type:String, required:true},
+    booking_Id:{type:String, unique:true},
     seat_No: {type:String, required:true},
-    turn_No: {type:mongoose.Schema.Types.ObjectId, ref:"Train", required:true},
-    from: {type:mongoose.Schema.Types.ObjectId, ref:"StationsList", required:true},
-   
-    to: {type:mongoose.Schema.Types.ObjectId, ref:"StationsList", required:true},
+    turn_No: {type:String, required:true},
+    tClass : {type:String, required:true},
+    compartment: {type:String, required:true},
+    from: {type:String, required:true},
+    to: {type:String, required:true},
     travel_Date: {type:Date, required:true},
     booking_Date:{type:Date, default:Date.now},
-    status: {type:String, enum:["booked", "cancelled"], default:"booked"},
+    status: {type:String, enum:["booked", "cancelled" ], default:"booked"},
+    sectionS:{type:String, required:true},
+    sectionE:{type:String, required:true},
     price:{type:Number, required:true}
 });
 
-bookings.index({turn_No:1, seat_No:1,travel_Date:1}, {unique:true});
+bookings.index({turn_No:1, seat_No:1,travel_Date:1,sectionS:1,sectionE:1}, {unique:true});
+
+
 
 const Booking = mongoose.model("Booking", bookings);
 

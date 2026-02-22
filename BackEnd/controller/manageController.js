@@ -2,6 +2,7 @@ import 'dotenv/config';
 import TrainList from '../models/trainList.js';
 import Stations from '../models/stoppingStations.js';
 import FaresMatrix from '../models/fares.js';
+import Seats from '../models/seats.js';
 
 const addTrain = async (req,res) => {
     const {
@@ -57,7 +58,10 @@ const addStation = async (req,res)=>{
         turn_No,
         sName,
         sArrival,
-        sDeparture
+        sDeparture,
+        order,
+        sectionS,
+        sectionE
     } = req.body;
     try{
         const exitingStation = await Stations.findOne({turn_No ,sName});
@@ -65,7 +69,7 @@ const addStation = async (req,res)=>{
             return res.status(400).json({message: 'There is Filed here for this'});
         }
 
-        const newStation = new Stations({turn_No,sName,sArrival,sDeparture});
+        const newStation = new Stations({turn_No,sName,sArrival,sDeparture,order,sectionS, sectionE});
         await newStation.save();
         res.status(200).json({message:"Station added successfully!"});
     }
@@ -79,12 +83,15 @@ const addStation = async (req,res)=>{
         turn_No,
         sName,
         sArrival,
-        sDeparture
+        sDeparture,
+        order,
+        sectionS,
+        sectionE
     } = req.body;
     try{
         const updateStationData = await Stations.findOneAndUpdate(
             {turn_No: turn_No, sName: sName},
-            {$set:{turn_No:turn_No, sName:sName, sArrival:sArrival, sDeparture:sDeparture}},
+            {$set:{turn_No:turn_No, sName:sName, sArrival:sArrival, sDeparture:sDeparture, order: order,sectionS:sectionS, sectionE: sectionE}},
             {new:true}
         )
         if(!updateStationData){
@@ -167,4 +174,51 @@ const addStation = async (req,res)=>{
         res.status(500).json({message:err.message});
     }
  }
-export  {addTrain, addStation, updateTrain, updateStation, addFares, updateFares};
+
+ const addSeats = async(req,res) =>{
+    const {
+        turn_No,
+        tClass,
+        compartment,
+        seatsCount
+    } = req.body;
+    try{
+        const exitingSeats = Seats.findOne({turn_No,tClass,compartment});
+        if(exitingSeats.length >0){
+            return res.status(400).json({message:"There is data field here on same data!"});
+        }
+        const newSeats = new Seats({turn_No, tClass, compartment, seatsCount});
+        await newSeats.save();
+
+        if(!newSeats) {
+            return res.status(400).json({message:"Please try again!"});
+        }
+        res.status(200).json({message:"Seats added Successfully!"});
+    }
+    catch(err){
+        res.status(500).json({message:err.message});
+    }
+ }
+ const updateSeats = async(req,res) =>{
+    const {
+        turn_No,
+        tClass,
+        compartment,
+        seatsCount
+    } = req.body;
+    try{
+        const updateSeats = await Seats.findOneAndUpdate({turn_No,tClass,compartment},
+            {$set:{turn_No:turn_No, tClass:tClass, compartment:compartment, seatsCount:seatsCount}},
+            {new:true}
+        );
+        if(!updateSeats){
+            return res.status(400).json({message:"Can't Update!"});
+        }
+        
+        res.status(200).json({message:"Seats added Successfully!"});
+    }
+    catch(err){
+        res.status(500).json({message:err.message});
+    }
+ }
+export  {addTrain, addStation, updateTrain, updateStation, addFares, updateFares,addSeats, updateSeats};

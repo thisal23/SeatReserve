@@ -17,6 +17,11 @@ function Manage() {
     const [cols , setCols]= useState(0);
     const [matrix, setMatrix]= useState([]);
     const [generated, setGenerated] = useState(false);
+    const [order, setOrder] = useState("");
+    const [sectionS, setSectionS] = useState("");
+    const [sectionE, setSectionE] = useState("");
+    const [compartment, setCompartment]= useState("");
+    const [seatsCount, setSeatsCount]= useState(0);
 
     const generateTable = () =>{
         const newMatrix = Array.from({length:rows+1},(_, rowIndex)=> 
@@ -59,7 +64,7 @@ function Manage() {
     const handleStation = async (e) =>{
         e.preventDefault();
         try{
-            const res= await API.post("/manage/stations", {turn_No,sName,sArrival,sDeparture});
+            const res= await API.post("/manage/stations", {turn_No,sName,sArrival,sDeparture,order,sectionS, sectionE});
             alert('Station added successfully!');
         }
         catch(err){
@@ -82,6 +87,18 @@ function Manage() {
         }
     };
 
+    const handleSeats = async(e)=>{
+        e.preventDefault();
+        try{
+            const res = await API.post("/manage/addSeats", {turn_No,tClass,compartment,seatsCount});
+            alert("Seats added successfully!");
+        }
+        catch(err){
+            console.log(err);
+            alert('Please try again!');
+        }
+    }
+
     const handleUpdateTrain = async ()=>{
         try{
             const res = await API.post("/manage/updateTrain", {line,turn_No, name, from, to, departure});
@@ -95,7 +112,7 @@ function Manage() {
 
     const handleUpdateStation = async ()=>{
         try{
-            const res = await API.post("/manage/updateStation", {turn_No,sName,sArrival, sDeparture});
+            const res = await API.post("/manage/updateStation", {turn_No,sName,sArrival, sDeparture, order,sectionS, sectionE});
             alert("Station Updated successfully");
         }
         catch(err){
@@ -103,11 +120,26 @@ function Manage() {
             alert('Update Unsuccessful! Please try again...')
         }
     };
+
+    const handleUpdateSeats = async()=>{
+        try{
+            const res = await API.post("/manage/updateSeats", {turn_No,tClass,compartment,seatsCount});
+            alert("Seats Updated Successfully!");
+        }
+        catch(err){
+            console.log(err);
+            alert('Update Unsuccessful! Please try again...');
+        }
+    }
+
     const handleResetStation = () =>{
         setTurn_No("");
         setSName("");
         setSArrival("");
         setSDeparture("");
+        setOrder("");
+        setSectionS("");
+        setSectionE("");
     };
 
     const handleResetTurn = () =>{
@@ -121,9 +153,16 @@ function Manage() {
     const handleResetFares = ()=>{
         setTurn_No("");
         setTClass("");
-        setCols("");
-        setRows("");
+        setCols(0);
+        setRows(0);
         setGenerated(false);
+    };
+
+    const handleResetSeats = ()=>{
+        setTurn_No("");
+        setTClass("");
+        setCompartment("");
+        setSeatsCount(0);
     };
 
   return (
@@ -164,9 +203,32 @@ function Manage() {
                     <input type='text' placeholder='Arrival Time' value={sArrival} onChange={(e)=>setSArrival(e.target.value)}/>
                     <label>Departure :</label>
                     <input type='text' placeholder='Departure Time' value={sDeparture} onChange={(e)=> setSDeparture(e.target.value)}/> 
+                    <label>Order :</label>
+                    <input type='text' placeholder='Station Order' value={order} onChange={(e)=> setOrder(e.target.value)}/> 
+                    <label>Section Start :</label>
+                    <input type='text' placeholder='Section Starting Station' value={sectionS} onChange={(e)=> setSectionS(e.target.value)}/> 
+                    <label>Section End :</label>
+                    <input type='text' placeholder='Station Ending Starting Station' value={sectionE} onChange={(e)=> setSectionE(e.target.value)}/> 
                     <button className="bg-primary hover:bg-green-500 text-white rounded-lg py-2 mt-3 justify-center" type='submit' onClick={handleStation}>Add</button>
                     <button className="bg-red-600 hover:bg-red-500 text-white rounded-lg py-2 mt-3 justify-center" type="reset" onClick={handleResetStation}>Reset</button>
                     <button className="bg-orange-500 hover:bg-orange-400 text-white rounded-lg py-2 mt-3 justify-center" type='button' onClick={handleUpdateStation}>Update</button>
+
+                </form>
+            </div>
+            <div className='flex flex-col bg-white text-black justify-center text-center rounded-lg border border-green-800'>
+                <h6>Add / Update Seats</h6>
+                <form  className='flex flex-col text-left p-6 gap-2'>
+                    <label>Turn No :</label>
+                    <input type="text" placeholder='Enter Turn No' value={turn_No} onChange={(e)=> setTurn_No(e.target.value)}/>
+                    <label>Class :</label>
+                    <input type='text' placeholder='Class Name' value={tClass} onChange={(e)=> setTClass(e.target.value)}/>
+                    <label>Compartment :</label>
+                    <input type='text' placeholder='Compartment Name' value={compartment} onChange={(e)=>setCompartment(e.target.value)}/>
+                    <label>Seats :</label>
+                    <input type='text' placeholder='Seats Count' value={seatsCount} onChange={(e)=> setSeatsCount(e.target.value)}/> 
+                    <button className="bg-primary hover:bg-green-500 text-white rounded-lg py-2 mt-3 justify-center" type='submit' onClick={handleSeats}>Add</button>
+                    <button className="bg-red-600 hover:bg-red-500 text-white rounded-lg py-2 mt-3 justify-center" type="reset" onClick={handleResetSeats}>Reset</button>
+                    <button className="bg-orange-500 hover:bg-orange-400 text-white rounded-lg py-2 mt-3 justify-center" type='button' onClick={handleUpdateSeats}>Update</button>
 
                 </form>
             </div>

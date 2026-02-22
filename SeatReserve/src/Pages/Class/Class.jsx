@@ -10,6 +10,11 @@ function Class() {
     </div>
     <div className='mt-40'>
         <FirstClass/>
+        <div>
+          <div>
+            <h4> </h4>
+          </div>
+        </div>
     </div>
     </>
   )

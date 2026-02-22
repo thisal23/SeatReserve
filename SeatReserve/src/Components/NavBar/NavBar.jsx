@@ -35,7 +35,7 @@ function NavBar() {
                         max-md:text-lg z-50 flex flex-col md:flex-row items-center
                         max-md:justify-center gap-8 min-md:px-8 py-3
                         max-md:h-screen
-                        min-md:rounded-full backdrop-blur bg-black/70 md:bg-white/10 md: border
+                        min-md:rounded-full backdrop-blur text-white bg-black/70 md:bg-gray-400 md: border
                         border-gray-300/20 overflow-hidden transition-[width] duration-300 ${isOpen ? 'max-md:w-full' : 'max-md:w-0'}`} >
             <XIcon className='md:hidden absolute top-6 right-6 w-6 h-6 cursor-pointer' onClick={()=> setIsOpen(!isOpen)}/>
             <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to='/'>Home</Link>
@@ -47,7 +47,7 @@ function NavBar() {
         <div className='flex items-center gap-4 m-4 top-0 right-0'>
           {user ? (
             <div className='gap-4 flex items-center'>
-              <span className='font-bold'> Hello, {user.name}</span>
+              <span className='font-bold text-gray-400'> Hello, {user.name}</span>
               <button onClick={handleLogout} className='px-4 py-1 sm:px-7 sm:py-2 bg-red-500 hover:bg-red-700 transition rounded-full  font-medium cursor-pointer'>Logout</button>
             </div>
           ):(
